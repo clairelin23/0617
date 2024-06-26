@@ -3,10 +3,11 @@
 ## Overview
 This document outlines the design and implementation of an AI application to assess how a person is qualified for an O-1A Visa based on their CV. The application extracts information relevant to the O-1A visa categories, summarizes and deduplicates this information, and evaluates the person's qualification.
 Functional Requirements
-•	Input: A CV text.
-•	Output:
-1.	Extracted information categorized according to the O-1A visa criteria.
-2.	An overall rating (high, medium, or low) on the chance that the person is qualified for an O-1A visa.
+- Input: 
+  - A CV text
+- Output:
+  - Extracted information categorized according to the O-1A visa criteria.
+  - An overall rating (high, medium, or low) on the chance that the person is qualified for an O-1A visa.
 
 #### Result of uploading my resume
 ![result0.png](result0.png)
@@ -27,7 +28,8 @@ The system therefore assesses the CV against the following O-1A visa criteria:
 7.	Scholarly Articles: Evidence of the beneficiary's authorship of scholarly articles in professional journals or other major media.
 8.	Critical Employment: Evidence that the beneficiary has been employed in a critical or essential capacity for organizations with a distinguished reputation.
 9.	High Remuneration: Evidence that the beneficiary has commanded or will command a high salary or other remuneration.
-The system automatically gives a rating of high when Nobel Prize is rewarded to the beneficiary or when the person satisfy at least 3 categories, a rating of medium when the beneficiary satisfy exactly 3 categories, and a rating of low when the beneficuary satisfy less then 3 categories.
+
+The system automatically gives a rating of high when Nobel Prize is rewarded to the beneficiary or when the person satisfy > 3 categories, a rating of medium when the beneficiary satisfy exactly 3 categories, and a rating of low when the beneficuary satisfy less then 3 categories.
 ## System Design
 ### High-Level Architecture
 1.	Input Handling: Receives the CV text.
@@ -48,8 +50,8 @@ The system automatically gives a rating of high when Nobel Prize is rewarded to 
    - Output: Extracted information.
 
 3. Refinement and Deduplication
-   - Function: refine_information, evaluate_criteria 
-   - Description: Splits the extracted information by periods, processes each segment, cleans the text, and removes duplicates. 
+   - Function: refine_information
+   - Description: Reemove duplicate information. 
    - Input: Extracted information. 
    - Output: Deduplicated information.
 
@@ -60,8 +62,8 @@ The system automatically gives a rating of high when Nobel Prize is rewarded to 
    - Output: Counts of evidence in each category.
 
 5. Qualification Evaluation
-   - Function: evaluate_high_evidence 
-   - Description: Evaluates count of categories with evidence and generate a rating 
+   - Function: calculate_rating 
+   - Description: Use a arithmetic sum of categories with evidence and generate a rating 
    - Input: Counts of evidence in each category 
    - Output: Overall qualification rating (high, medium, or low).
 
